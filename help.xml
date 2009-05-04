@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<!--
+  MP carriers for FlightGear.
+
+  Copyright (C) 2007 - 2009  Anders Gidenstam  (anders(at)gidenstam.org)
+  This file is released under the GPL license version 2 or later.
+-->
+<PropertyList>
+ <!-- Specific keys -->
+ <title>Steerable AI carrier</title>
+ <key>
+  <name>Ctrl-A</name>
+  <desc>Toggle Manual/AI control.</desc>
+ </key>
+ <key>
+  <name>PageUp</name>
+  <desc>Increase speed.</desc>
+ </key>
+ <key>
+  <name>PageDown</name>
+  <desc>Decrease speed.</desc>
+ </key>
+ <key>
+  <name>Left</name>
+  <desc>Decrease target course.</desc>
+ </key>
+ <key>
+  <name>Right</name>
+  <desc>Increase target course.</desc>
+ </key>
+ <line>
+  Course control is only possible in manual control mode.
+  Use the ATC/AI->Options dialog to control deck elevators and
+  deck lights.
+ </line>
+</PropertyList>
