@@ -187,9 +187,9 @@ var init = func {
       update(loopid);
       
       # Create onscreen display
-      var display = screen.display.new(20, 10);
-      display.add(carrier_base.getNode("orientation/true-heading-deg"));
-      display.add(carrier_base.getNode("velocities/speed-kts"));
+#      var display = screen.display.new(20, 10);
+#      display.add(carrier_base.getNode("orientation/true-heading-deg"));
+#      display.add(carrier_base.getNode("velocities/speed-kts"));
 
       return;
     }

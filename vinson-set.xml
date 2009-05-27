@@ -48,6 +48,14 @@
 		<instrumentation>
 			<path/>
 		</instrumentation>
+		
+		<hud>
+			<path n="1">Aircraft/MPCarrier/Systems/LSO.xml</path>
+			<visibility n="1">true</visibility>
+			<font>
+				<size type="float">10.0</size>
+			</font>
+		</hud>
 
 		<!-- This aircraft is pointless without the vinson_demo scenario. -->
 		<ai>
@@ -83,7 +91,6 @@
 		<approachview>
 			<file>Aircraft/MPCarrier/Systems/approachview.nas</file>
 		</approachview>
-	
-</nasal>
+	</nasal>
 
 </PropertyList>

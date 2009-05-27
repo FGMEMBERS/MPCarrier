@@ -1,0 +1,155 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+	<name>LSO Hud</name>
+	<enable3d>false</enable3d>
+	
+	<import>
+		<path>Huds/Instruments/compass.xml</path>
+		<y-offset>190</y-offset>
+	</import>
+
+	<ladder>
+		<name>Ladder</name>
+		<type>pitch</type>
+		<x>-60</x>
+		<y>-90</y>
+		<width>120</width>
+		<height>180</height>
+
+		<condition>
+			<equals>
+				<property>/sim/current-view/name</property>
+				<value>Approach View</value>
+			</equals>
+		</condition>
+
+		<roll-input>
+			<property>/orientation/roll-deg</property>
+			<factor>-1.0</factor>
+		</roll-input>
+
+		<pitch-input>
+			<property>/orientation/pitch-deg</property>
+			<factor>-1.0</factor>
+		</pitch-input>
+
+		<compression-factor>26</compression-factor>
+		<display-span>8</display-span>
+		<divisions>1.0</divisions>
+		<screen-hole>100</screen-hole>
+		<lbl-pos>0</lbl-pos>
+		<glide-slope>0.0</glide-slope>
+		<enable-fuselage-ref-line>false</enable-fuselage-ref-line>
+		<enable-target-spot>true</enable-target-spot>
+		<enable-target-markers>false</enable-target-markers>
+		<enable-velocity-vector>false</enable-velocity-vector>
+		<enable-drift-marker>false</enable-drift-marker>
+		<enable-alpha-bracket>false</enable-alpha-bracket>
+		<enable-energy-marker>false</enable-energy-marker>
+		<enable-climb-dive-marker>false</enable-climb-dive-marker>
+		<enable-glide-slope-marker>false</enable-glide-slope-marker>
+		<enable-energy-worm>false</enable-energy-worm>
+		<enable-waypoint-marker>false</enable-waypoint-marker>
+		<enable-zenith>false</enable-zenith>
+		<enable-nadir>false</enable-nadir>
+		<enable-hat>false</enable-hat>
+	</ladder>
+
+	<label>
+		<name>Rel Wind Dir</name>
+		<x>-300</x>
+		<y>190</y>
+		<width>200</width>
+		<height>25</height>
+		<prefix> Relative Wind Direction: </prefix>
+		<postfix> degs</postfix>
+		<halign>left</halign>
+		<format>%03.0f</format>
+		<box>true</box>
+		<input>
+			<property>ai/models/carrier/environment/rel-wind-from-carrier-hdg-degs</property>
+		</input>
+	</label>
+
+	<label>
+		<name>Heading True</name>
+		<x>-300</x>
+		<y>-225</y>
+		<width>200</width>
+		<height>25</height>
+		<prefix> Heading True: </prefix>
+		<postfix> degs</postfix>
+		<halign>left</halign>
+		<format>%03.0f</format>
+		<box>true</box>
+		<input>
+			<property>ai/models/carrier/orientation/true-heading-deg</property>
+		</input>
+	</label>
+
+	<label>
+		<name>Target Heading True</name>
+		<x>-300</x>
+		<y>-200</y>
+		<width>200</width>
+		<height>25</height>
+		<prefix> Target Heading True: </prefix>
+		<postfix> degs</postfix>
+		<halign>left</halign>
+		<format>%03.0f</format>
+		<box>true</box>
+		<input>
+			<property>ai/models/carrier/controls/tgt-heading-degs</property>
+		</input>
+	</label>
+
+	<label>
+		<name> Rel Wind Speed</name>
+		<x>100</x>
+		<y>190</y>
+		<width>200</width>
+		<height>25</height>
+		<prefix> Relative Wind Speed: </prefix>
+		<postfix> kts</postfix>
+		<halign>left</halign>
+		<format>%2.0f</format>
+		<box>true</box>
+		<input>
+			<property>ai/models/carrier/environment/rel-wind-speed-kts</property>
+		</input>
+	</label>
+
+	<label>
+		<name> Speed</name>
+		<x>100</x>
+		<y>-225</y>
+		<width>200</width>
+		<height>25</height>
+		<prefix> Speed: </prefix>
+		<postfix> kts</postfix>
+		<halign>left</halign>
+		<format>%2.0f</format>
+		<box>true</box>
+		<input>
+			<property>ai/models/carrier/velocities/speed-kts</property>
+		</input>
+	</label>
+
+	<label>
+		<name>Target Speed</name>
+		<x>100</x>
+		<y>-200</y>
+		<width>200</width>
+		<height>25</height>
+		<prefix> Target Speed: </prefix>
+		<postfix> kts</postfix>
+		<halign>left</halign>
+		<format>%2.0f</format>
+		<box>true</box>
+		<input>
+			<property>ai/models/carrier/controls/tgt-speed-kts</property>
+		</input>
+	</label>
+
+</PropertyList>
