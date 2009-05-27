@@ -49,6 +49,14 @@
 			<path/>
 		</instrumentation>
 
+		<hud>
+			<path n="1">Aircraft/MPCarrier/Systems/LSO.xml</path>
+			<visibility n="1">true</visibility>
+			<font>
+				<size type="float">10.0</size>
+			</font>
+		</hud>
+
 		<!-- This aircraft is pointless without the nimitz_demo scenario. -->
 		<ai>
 			<enabled type="bool">true</enabled>
