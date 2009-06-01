@@ -12,7 +12,7 @@
 
 		<description>Multiplayer carrier Carl Vinson - Other pilots can land on it.</description>
 		<author>Anders Gidenstam</author>
-		<status>experimental</status>
+		<status>alpha</status>
 		<aircraft-version>0.1</aircraft-version>
 
 		<flight-model>null</flight-model>
@@ -37,7 +37,7 @@
 		<systems>
 
 			<electrical>
-				<path/>
+
 			</electrical>
 
 			<static>
@@ -48,7 +48,7 @@
 		<instrumentation>
 			<path/>
 		</instrumentation>
-		
+
 		<hud>
 			<path n="1">Aircraft/MPCarrier/Systems/LSO.xml</path>
 			<visibility n="1">true</visibility>
@@ -79,7 +79,6 @@
 		<flap-pos-norm type="float"> 0.0 </flap-pos-norm>
 	</surface-positions>
 
-
 	<nasal>
 		<!-- Nasal Carrier View -->
 		<CarrierControl>
@@ -91,6 +90,9 @@
 		<approachview>
 			<file>Aircraft/MPCarrier/Systems/approachview.nas</file>
 		</approachview>
+		<lsoview>
+			<file>Aircraft/MPCarrier/Systems/lsoview.nas</file>
+		</lsoview>
 	</nasal>
 
 </PropertyList>
