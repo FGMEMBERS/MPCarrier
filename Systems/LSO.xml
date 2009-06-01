@@ -4,10 +4,36 @@
 	<name>LSO Hud</name>
 	<enable3d>false</enable3d>
 	
-	<import>
-		<path>Huds/Instruments/compass.xml</path>
-		<y-offset>190</y-offset>
-	</import>
+	<tape>
+		<name>Rel Brg</name>
+		<x>-100</x>
+		<y>190</y>
+		<width>200</width>
+		<height>28</height>
+
+		<input>
+			<property>/sim/current-view/heading-offset-rel-deg</property>
+		</input>
+		<display-span>25.0</display-span>
+
+		<option>top</option>
+
+		<major-divisions>5</major-divisions>
+		<minor-divisions>1</minor-divisions>
+		<tick-bottom>false</tick-bottom>
+		<tick-top>false</tick-top>
+		<tick-right>true</tick-right>
+		<tick-left>true</tick-left>
+		<cap-bottom>true</cap-bottom>
+		<cap-top>false</cap-top>
+		<cap-right>false</cap-right>
+		<cap-left>false</cap-left>
+		<marker-offset>0.0</marker-offset>
+		<enable-pointer>true</enable-pointer>
+		<pointer-type>fixed</pointer-type>
+		<tick-type>line</tick-type>
+		<tick-length>variable</tick-length>
+	</tape>
 
 	<ladder>
 		<name>Ladder</name>
@@ -31,7 +57,7 @@
 
 		<pitch-input>
 			<property>/orientation/pitch-deg</property>
-			<factor>-1.0</factor>
+			<factor>1.0</factor>
 		</pitch-input>
 
 		<compression-factor>26</compression-factor>
