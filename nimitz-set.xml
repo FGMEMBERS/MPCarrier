@@ -91,6 +91,9 @@
 		<approachview>
 			<file>Aircraft/MPCarrier/Systems/approachview.nas</file>
 		</approachview>
+		<lsoview>
+			<file>Aircraft/MPCarrier/Systems/lsoview.nas</file>
+		</lsoview>
 	</nasal>
 
 </PropertyList>
