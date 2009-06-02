@@ -44,6 +44,42 @@ var lso_view_handler = {
 		if (!me.find(me.current))
 			me.select(0);
 	},
+	update: func {
+		var view_x = getprop("sim/current-view/viewer-x-m");
+		var view_y = getprop("sim/current-view/viewer-y-m");
+		var view_z = getprop("sim/current-view/viewer-z-m");
+		var self = geo.Coord.new().set_xyz(view_x, view_y, view_z);
+		var target_callsign = me.current;
+		var heading = getprop("orientation/heading-deg");
+
+		foreach (var mp; multiplayer.model.list) {
+			var n = mp.node;
+			var callsign = n.getNode("callsign").getValue();
+
+			if(callsign == target_callsign){
+				var x = n.getNode("position/global-x").getValue();
+				var y = n.getNode("position/global-y").getValue();
+				var z = n.getNode("position/global-z").getValue();
+				var ac = geo.Coord.new().set_xyz(x, y, z);
+				var ht_ft = n.getNode("position/altitude-ft").getValue();
+				var distance = self.distance_to(ac);
+				var elevation = math.atan2((ht_ft - 71.932)* FT2M, distance) * R2D;
+
+				setprop("/sim/current-view/pitch-offset-deg",
+					elevation);
+
+				var hdg_offset = (heading - self.course_to(ac));
+
+				if (hdg_offset <= 360) hdg_offset += 360;
+
+				setprop("/sim/current-view/heading-offset-deg",
+					hdg_offset);
+			}
+
+		}
+
+		return 0
+	},
 	setup: func(data) {
 		if (data.root == '/') {
 		var ident = '[' ~ data.callsign ~ ']';
@@ -58,7 +94,7 @@ var lso_view_handler = {
 		setprop("/sim/current-view/y-offset-m",21.925);
 		setprop("/sim/current-view/z-offset-m",175.307);
 		setprop("/sim/current-view/default-field-of-view-deg",25);
-		setprop("/sim/current-view/target-callsign",data.callsign);
+#		setprop("/sim/current-view/target-callsign",data.callsign);
 
 		me.viewN.getNode("config").setValues({
 			"eye-lat-deg-path":"/" ~ "/position/latitude-deg",
