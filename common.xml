@@ -9,113 +9,124 @@
 -->
 <PropertyList>
 
- <sim>
+  <sim>
 
-  <!-- Aircraft specific help. -->
-  <help include="help.xml"/>
+    <!-- Aircraft specific help. -->
+    <help include="help.xml"/>
 
-  <multiplay>
-   <generic>
-    <string n="0" type="string"></string><!-- MP events -->
-   </generic>
-  </multiplay>
+    <multiplay>
+      <generic>
+        <string n="0"
+                type="string"></string>
+        <!-- MP events -->
+      </generic>
+    </multiplay>
 
- </sim>
+    <hud>
+      <path n="1">Aircraft/MPCarrier/Systems/LSO.xml</path>
+      <visibility n="1">true</visibility>
+      <font>
+        <size type="float">10.0</size>
+      </font>
+    </hud>
 
- <input>
-  <keyboard>
-   <key n="22">
-    <name>Ctrl-V</name>
-    <desc>Select initial view (view 0).</desc>
-    <binding>
-     <command>nasal</command>
-     <script>
-       setprop("/sim/current-view/view-number", view.indexof("Bridge View"));
-     </script>
-    </binding>
-   </key>
-   <key n="1">
-    <name>Ctrl-A</name>
-    <desc>Toggle AI/Manual control</desc>
-    <binding>
-     <command>nasal</command>
-     <script>CarrierControl.toggleAIControl()</script>
-    </binding>
-   </key>
+  </sim>
 
-   <!-- Throttle -->
-   <key n="361">
-    <name>PageDown</name>
-    <desc>Decrease base speed.</desc>
-    <repeatable type="bool">true</repeatable>
-    <binding>
-     <command>nasal</command>
-     <script>CarrierControl.incSpeed(-0.5)</script>
-    </binding>
-    <mod-shift>
-     <desc>Look back right.</desc>
-     <binding>
-      <command>property-assign</command>
-      <property>/sim/current-view/goal-heading-offset-deg</property>
-      <property>/sim/view/config/back-right-direction-deg</property>
-     </binding>
-    </mod-shift>
-   </key>
-   <key n="360">
-    <name>PageUp</name>
-    <desc>Increase base speed.</desc>
-    <repeatable type="bool">true</repeatable>
-    <binding>
-     <command>nasal</command>
-     <script>CarrierControl.incSpeed(0.5)</script>
-    </binding>
-    <mod-shift>
-     <desc>Look front right.</desc>
-     <binding>
-      <command>property-assign</command>
-      <property>/sim/current-view/goal-heading-offset-deg</property>
-      <property>/sim/view/config/front-right-direction-deg</property>
-     </binding>
-    </mod-shift>
-   </key>
 
-   <!-- Rudder -->
-   <key n="356">
-    <name>Left</name>
-    <desc>Rudder to port.</desc>
-    <repeatable type="bool">true</repeatable>
-    <binding>
-     <command>nasal</command>
-     <script>CarrierControl.incRudder(-0.5)</script>
-    </binding>
-    <mod-shift>
-     <desc>Look left.</desc>
-     <binding>
-      <command>property-assign</command>
-      <property>/sim/current-view/goal-heading-offset-deg</property>
-      <property>/sim/view/config/left-direction-deg</property>
-     </binding>
-    </mod-shift>
-   </key>
-   <key n="358">
-    <name>Right</name>
-    <desc>Rudder to starboard.</desc>
-    <repeatable type="bool">true</repeatable>
-    <binding>
-     <command>nasal</command>
-     <script>CarrierControl.incRudder(0.5)</script>
-    </binding>
-    <mod-shift>
-     <desc>Look right.</desc>
-     <binding>
-      <command>property-assign</command>
-      <property>/sim/current-view/goal-heading-offset-deg</property>
-      <property>/sim/view/config/right-direction-deg</property>
-     </binding>
-    </mod-shift>
-   </key>
-  
-  </keyboard>
- </input>
+  <input>
+    <keyboard>
+      <key n="22">
+        <name>Ctrl-V</name>
+        <desc>Select initial view (view 0).</desc>
+        <binding>
+          <command>nasal</command>
+          <script>
+            setprop("/sim/current-view/view-number", view.indexof("Bridge View"));
+          </script>
+        </binding>
+      </key>
+      <key n="1">
+        <name>Ctrl-A</name>
+        <desc>Toggle AI/Manual control</desc>
+        <binding>
+          <command>nasal</command>
+          <script>CarrierControl.toggleAIControl()</script>
+        </binding>
+      </key>
+
+      <!-- Throttle -->
+      <key n="361">
+        <name>PageDown</name>
+        <desc>Decrease base speed.</desc>
+        <repeatable type="bool">true</repeatable>
+        <binding>
+          <command>nasal</command>
+          <script>CarrierControl.incSpeed(-0.5)</script>
+        </binding>
+        <mod-shift>
+          <desc>Look back right.</desc>
+          <binding>
+            <command>property-assign</command>
+            <property>/sim/current-view/goal-heading-offset-deg</property>
+            <property>/sim/view/config/back-right-direction-deg</property>
+          </binding>
+        </mod-shift>
+      </key>
+      <key n="360">
+        <name>PageUp</name>
+        <desc>Increase base speed.</desc>
+        <repeatable type="bool">true</repeatable>
+        <binding>
+          <command>nasal</command>
+          <script>CarrierControl.incSpeed(0.5)</script>
+        </binding>
+        <mod-shift>
+          <desc>Look front right.</desc>
+          <binding>
+            <command>property-assign</command>
+            <property>/sim/current-view/goal-heading-offset-deg</property>
+            <property>/sim/view/config/front-right-direction-deg</property>
+          </binding>
+        </mod-shift>
+      </key>
+
+      <!-- Rudder -->
+      <key n="356">
+        <name>Left</name>
+        <desc>Rudder to port.</desc>
+        <repeatable type="bool">true</repeatable>
+        <binding>
+          <command>nasal</command>
+          <script>CarrierControl.incRudder(-0.5)</script>
+        </binding>
+        <mod-shift>
+          <desc>Look left.</desc>
+          <binding>
+            <command>property-assign</command>
+            <property>/sim/current-view/goal-heading-offset-deg</property>
+            <property>/sim/view/config/left-direction-deg</property>
+          </binding>
+        </mod-shift>
+      </key>
+      <key n="358">
+        <name>Right</name>
+        <desc>Rudder to starboard.</desc>
+        <repeatable type="bool">true</repeatable>
+        <binding>
+          <command>nasal</command>
+          <script>CarrierControl.incRudder(0.5)</script>
+        </binding>
+        <mod-shift>
+          <desc>Look right.</desc>
+          <binding>
+            <command>property-assign</command>
+            <property>/sim/current-view/goal-heading-offset-deg</property>
+            <property>/sim/view/config/right-direction-deg</property>
+          </binding>
+        </mod-shift>
+      </key>
+
+    </keyboard>
+  </input>
 
 </PropertyList>

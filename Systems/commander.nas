@@ -26,9 +26,7 @@ var c_turn_to_recvry_hdg = "controls/turn-to-recovery-hdg";
 var c_turn_to_base_co    = "controls/turn-to-base-course";
 
 
-var c_control_speed   = "controls/base-speed-kts";
-#var c_control_course  = "controls/base-course-deg";
-#var c_control_speed   = "controls/tgt-speed-kts";
+var c_control_speed   = "controls/tgt-speed-kts";
 var c_control_course  = "controls/tgt-heading-degs";
 var c_control_rudder  = "surface-positions/rudder-pos-deg";
 var c_control_mp_ctrl = "controls/mp-control";
@@ -186,10 +184,19 @@ var init = func {
               carrier_base.getNode(c_control_course).getValue());      
       update(loopid);
       
-      # Create onscreen display
-#      var display = screen.display.new(20, 10);
-#      display.add(carrier_base.getNode("orientation/true-heading-deg"));
-#      display.add(carrier_base.getNode("velocities/speed-kts"));
+      # Map some important carrier properties to the main tree.
+      var p = "environment/rel-wind-from-carrier-hdg-degs";
+      props.globals.getNode(p, 1).alias(carrier_base.getNode(p));
+      p = "environment/rel-wind-speed-kts";
+      props.globals.getNode(p, 1).alias(carrier_base.getNode(p));
+      p = "orientation/true-heading-deg";
+      props.globals.getNode(p, 1).alias(carrier_base.getNode(p));
+      p = "velocities/speed-kts";
+      props.globals.getNode(p, 1).alias(carrier_base.getNode(p));
+      p = "controls/tgt-heading-degs";
+      props.globals.getNode(p, 1).alias(carrier_base.getNode(p));
+      p = "controls/tgt-speed-kts";
+      props.globals.getNode(p, 1).alias(carrier_base.getNode(p));
 
       return;
     }

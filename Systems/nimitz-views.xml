@@ -228,4 +228,22 @@
 		</config>
 	</view>
 
+	<!--<view n="105">
+		<name>ATC View</name>
+		<type>lookat</type>
+		<internal type="bool">false</internal>
+		<config>
+			<from-model type="bool">true</from-model>
+			<from-model-idx type="int">0</from-model-idx>
+			<ground-level-nearplane-m type="double">5.0f</ground-level-nearplane-m>
+			<default-field-of-view-deg type="double">55.0</default-field-of-view-deg>
+			<default-pitch-deg type="double">0</default-pitch-deg>
+			<default-heading-deg type="double">0</default-heading-deg>
+			<front-direction-deg type="double">0</front-direction-deg>
+			<target-lat-deg-path>/sim/atc/target-lat</target-lat-deg-path>
+			<target-lon-deg-path>/sim/atc/target-lon</target-lon-deg-path>
+			<target-alt-ft-path>/sim/atc/target-alt</target-alt-ft-path>
+		</config>
+	</view>-->
+
 </PropertyList>
