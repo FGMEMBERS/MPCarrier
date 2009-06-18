@@ -207,7 +207,7 @@ var lso_view_handler = {
                     me.current ~ ": " ~ "1 MILE CALL THE BALL" ~ warn);
                 me.report1 = 1;
             } elsif (distance < 0.6 and distance >=0.5 
-                    //and reason != ""  and !me.report0 ){
+                    and reason != ""  and !me.report0 ){
                 setprop("/sim/multiplay/chat", 
                     me.current ~ ": " ~ "WAVEOFF WAVEOFF" ~ reason);
                 setprop("ai/models/carrier/controls/flols/wave-off-lights", 1);
