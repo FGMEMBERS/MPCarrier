@@ -17,6 +17,8 @@ view.manager.register("Approach View", {
 # using the convention of +ve bearing = starboard, -ve = port
 #
 
+props.globals.initNode("/sim/current-view/heading-offset-rel-deg", 0, "DOUBLE");
+
 setlistener("/sim/signals/nasal-dir-initialized", func {
 	setlistener("/sim/current-view/heading-offset-deg", func(n) {
 		var heading_offset_deg = n.getValue();

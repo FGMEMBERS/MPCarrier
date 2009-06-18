@@ -139,6 +139,46 @@
 	</label>
 
 	<label>
+		<name>Gear</name>
+		<x>-300</x>
+		<y>60</y>
+		<width>200</width>
+		<height>25</height>
+
+
+		<condition>
+			<equals>
+				<property>/sim/current-view/name</property>
+				<value>Landing Signal Officer View</value>
+			</equals>
+		</condition>
+
+		<box>false</box>
+		<prefix>GEAR: </prefix>
+		<halign>left</halign>
+
+		<input>
+			<property>/sim/current-view/gear</property>
+		</input>
+
+		<!--<blinking>
+			<interval>0.25</interval>
+			<condition>
+				<and>
+					<equals>
+						<property>/sim/current-view/height</property>
+						<value>VERY LOW</value>
+					</equals>
+					<less-than>
+						<property>/sim/current-view/distance</property>
+						<value>1</value>
+					</less-than>
+				</and>
+			</condition>
+		</blinking>-->
+	</label>
+
+	<label>
 		<name>Heading True</name>
 		<x>-300</x>
 		<y>-225</y>

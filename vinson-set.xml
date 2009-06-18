@@ -45,17 +45,16 @@
 
 		</systems>
 
-		<!--<panel>
-			<path>Aircraft/MPCarrier/Panels/MP-ATC-panel2.xml</path>
-			<visibility>false</visibility>
+		<panel>
+			<path>Aircraft/MPCarrier/Panels/MP-radar-panel.xml</path>
+			<visibility>true</visibility>
 		</panel>
 
 		<instrumentation>
-			<path>Aircraft/ATC/instrumentation.xml</path>
-		</instrumentation>-->
+			<path>Aircraft/MPCarrier/Systems/instrumentation.xml</path>
+		</instrumentation>
 
-
-		<!-- This aircraft is pointless without the vinson_demo scenario. -->
+		<!-- This "aircraft" is pointless without the vinson_demo scenario. -->
 		<ai>
 			<enabled type="bool">true</enabled>
 			<scenario n="100">vinson_demo</scenario>
@@ -70,7 +69,8 @@
 		</multiplay>
 
 		<atc>
-			<target-id type="string"></target-id>
+			<target-id type="int"></target-id>
+			<target-callsign type="string"></target-callsign>
 			<target-alt type="double">0</target-alt>
 			<target-number type="int">-1</target-number>
 			<target-range type="double">0</target-range>
@@ -139,9 +139,9 @@
 		<lsoview>
 			<file>Aircraft/MPCarrier/Systems/lsoview.nas</file>
 		</lsoview>
-		<!--<ATC>
-			<file>Aircraft/MPCarrier/Panels/atc2.nas</file>
-		</ATC>-->
+		<Radar>
+			<file>Aircraft/MPCarrier/Panels/MP-radar.nas</file>
+		</Radar>
 	</nasal>
 
 </PropertyList>
