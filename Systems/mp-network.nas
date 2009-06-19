@@ -61,6 +61,12 @@ var send_base_state = func (state) {
     broadcast.send(message_id["base_state"] ~
                    Binary.encodeDouble(state));
 }
+
+var send_wave_off_lights_state = func (state) {
+    if (typeof(broadcast) != "hash") return;
+    broadcast.send(message_id["wave_off_state"] ~
+                   Binary.encodeDouble(state));
+}
 ###############################################################################
 # MP broadcast message handler.
 var handle_message = func (sender, msg) {
@@ -104,6 +110,13 @@ var handle_message = func (sender, msg) {
             Binary.decodeDouble(substr(msg, 1));
         #debug.dump(state);
         get_carrier(sender).set_property(MPCarriers.c_turn_to_base_co, state);
+    } else if (type == message_id["wave_off_state"][0]) {
+#       print("MPCarrier: wave off state");
+        var state =
+            Binary.decodeDouble(substr(msg, 1));
+        print("MPCarrier: wave off state", state);
+        #debug.dump(state);
+        get_carrier(sender).set_property(MPCarriers.c_wave_off_lights, state);
     }
 }
 
@@ -140,5 +153,6 @@ var mp_network_init = func (active_participant=0) {
                    launch_state     : Binary.encodeByte(4),
                    recovery_state   : Binary.encodeByte(5),
                    base_state       : Binary.encodeByte(6),
+                   wave_off_state   : Binary.encodeByte(7),
                  };
 }

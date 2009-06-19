@@ -24,7 +24,7 @@ var c_flood_lights       = "controls/lighting/flood-lights-red-norm";
 var c_turn_to_launch_hdg = "controls/turn-to-launch-hdg";
 var c_turn_to_recvry_hdg = "controls/turn-to-recovery-hdg";
 var c_turn_to_base_co    = "controls/turn-to-base-course";
-
+var c_wave_off_lights    = "controls/flols/wave-off-lights";
 
 var c_control_speed   = "controls/tgt-speed-kts";
 var c_control_course  = "controls/tgt-heading-degs";
@@ -114,6 +114,8 @@ var send_events = func () {
                                      getNode(c_turn_to_recvry_hdg).getValue());
     MPCarriersNW.send_base_state(carrier_base.
                                  getNode(c_turn_to_base_co).getValue());
+    MPCarriersNW.send_wave_off_lights_state(carrier_base.
+                                 getNode(c_wave_off_lights).getValue());
     last_announce = now;
   }
 }

@@ -25,6 +25,8 @@ var c_speed   = "velocities/speed-kts";
 #var c_control_course  = "controls/base-course-deg";
 var c_control_speed   = "controls/tgt-speed-kts";
 var c_control_course  = "controls/tgt-heading-degs";
+var c_wave_off_lights = "controls/flols/wave-off-lights";
+
 
 var c_control_mp_ctrl = "controls/mp-control";
 
