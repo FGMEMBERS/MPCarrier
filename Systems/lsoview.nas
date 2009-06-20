@@ -171,10 +171,10 @@ var lso_view_handler = {
 #         print ("distance ", me.current, " ", distance, " ", rel_brg);
 
 		if (distance != nil and me.distance != nil 
-            and (rel_brg <= -138 or rel_brg >= 122)){
+			and (rel_brg <= -138 or rel_brg >= 122)){
 
-            print ("updating commentary ",
-                 me.report3, " ", me.report2, " ", me.report1, " ", me.report0);
+#            print ("updating commentary ",
+#				 me.report3, " ", me.report2, " ", me.report1, " ", me.report0);
 
 			if (me.gear < 3){
 				gear = " DROP YOUR GEAR";
@@ -191,54 +191,45 @@ var lso_view_handler = {
 				reason = gear2 ~ flap2;
 			}
 
-            if (distance > 4 or distance >= me.distance){
-                me.report3 = me.report2 = me.report1 = me.report0 = 0;
-                
-                foreach (var c; props.globals.getNode("/ai/models").getChildren("carrier")){
-                    c.getNode("controls/flols/wave-off-lights",1).setValue(0);
-                }
+			if (distance > 4 or distance >= me.distance){
+				me.report3 = me.report2 = me.report1 = me.report0 = 0;
+				
+				foreach (var c; props.globals.getNode("/ai/models").getChildren("carrier")){
+					c.getNode("controls/flols/wave-off-lights",1).setValue(0);
+				}
 
-            } elsif (distance < 3.1 and distance >=3.0 and !me.report3){
-			    setprop("/sim/multiplay/chat", 
-				    me.current ~ ": " ~ "3 MILES");
-			    me.report3 = 1;
-		    } elsif (distance < 2.1 and distance >=2.0 and !me.report2){
-			    setprop("/sim/multiplay/chat", 
-				    me.current ~ ": " ~ "2 MILES" ~ warn);
-			    me.report2 = 1;
-		    } elsif (distance < 1.1 and distance >=1.0 and !me.report1){
-			    setprop("/sim/multiplay/chat", 
-				    me.current ~ ": " ~ "1 MILE CALL THE BALL" ~ warn);
-			    me.report1 = 1;
-		    } elsif (distance < 0.6 and distance >=0.5 
-				    and reason != ""  and !me.report0 ){
-			    setprop("/sim/multiplay/chat", 
-				    me.current ~ ": " ~ "WAVEOFF WAVEOFF" ~ reason);
+			} elsif (distance < 3.1 and distance >=3.0 and !me.report3){
+				setprop("/sim/multiplay/chat", 
+					me.current ~ ": " ~ "3 MILES");
+				me.report3 = 1;
+			} elsif (distance < 2.1 and distance >=2.0 and !me.report2){
+				setprop("/sim/multiplay/chat", 
+					me.current ~ ": " ~ "2 MILES" ~ warn);
+				me.report2 = 1;
+			} elsif (distance < 1.1 and distance >=1.0 and !me.report1){
+				setprop("/sim/multiplay/chat", 
+					me.current ~ ": " ~ "1 MILE CALL THE BALL" ~ warn);
+				me.report1 = 1;
+			} elsif (distance < 0.6 and distance >=0.5 
+					and reason != ""  and !me.report0 ){
+				setprop("/sim/multiplay/chat", 
+					me.current ~ ": " ~ "WAVEOFF WAVEOFF" ~ reason);
 
-			    foreach (var c; props.globals.getNode("/ai/models").getChildren("carrier")){
-				    c.getNode("controls/flols/wave-off-lights",1).setValue(1);
-                    print("wave off ",
-                    c.getNode("name",1).getValue(),
-                    " ",
-                    c.getNode("controls/flols/wave-off-lights",1).getValue());
-			    }
+				foreach (var c; props.globals.getNode("/ai/models").getChildren("carrier")){
+					c.getNode("controls/flols/wave-off-lights",1).setValue(1);
+#                   print("wave off ",
+#					c.getNode("name",1).getValue(),
+#					" ",
+#					c.getNode("controls/flols/wave-off-lights",1).getValue());
+				}
 
-			    me.report0 = 1;
-		    } elsif (distance < 1.0 and height != "" and !me.report0){
-			    setprop("/sim/multiplay/chat", 
-				    me.current ~ ": YOU'RE " ~ height);
-			    interval = 10;
-			    print(" transmit height ", me.current ~ ": YOU'RE " ~ height);
-            }
-
-#            } else {
-#				me.report3 = me.report2 = me.report1 = me.report0 = 0;
-#                
-#                foreach (var c; props.globals.getNode("/ai/models").getChildren("carrier")){
-#                    c.getNode("controls/flols/wave-off-lights",1).setValue(0);
-#                }
-#
-#            }
+				me.report0 = 1;
+			} elsif (distance < 1.0 and height != "" and !me.report0){
+				setprop("/sim/multiplay/chat", 
+					me.current ~ ": YOU'RE " ~ height);
+				interval = 10;
+#			    print(" transmit height ", me.current ~ ": YOU'RE " ~ height);
+			}
 
 		}
 

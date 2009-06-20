@@ -114,7 +114,6 @@ var handle_message = func (sender, msg) {
 #       print("MPCarrier: wave off state");
         var state =
             Binary.decodeDouble(substr(msg, 1));
-        print("MPCarrier: wave off state", state);
         #debug.dump(state);
         get_carrier(sender).set_property(MPCarriers.c_wave_off_lights, state);
     }
