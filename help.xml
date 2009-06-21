@@ -33,6 +33,7 @@
 		<name>shift-p</name>
 		<desc>Toggle radar display. (Bridge View only)</desc>
 	</key>
+	
 
 	<line></line>
 	<line>Course control is only possible in manual control mode.</line>
