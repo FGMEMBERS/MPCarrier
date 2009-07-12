@@ -46,6 +46,10 @@ var mp_roll    = "orientation/roll-deg";
 var mp_speed              = "surface-positions/flap-pos-norm";
 var mp_rudder             = "surface-positions/rudder-pos-norm";
 var mp_network            = "sim/multiplay/generic/string[0]";
+var mp_message            = "sim/multiplay/generic/string[2]";
+var mp_tgt_hdg            = "sim/multiplay/generic/float[0]";
+var mp_tgt_spd            = "sim/multiplay/generic/float[1]";
+var mp_turn_radius        = "sim/multiplay/generic/float[2]";
 
 # Controller parameters.
 var cross_course_gain    = 0.2;
@@ -64,6 +68,8 @@ Manager.new = func (player = nil, carrier_name = nil, callsign = nil) {
               accept_callsign   : callsign,
               callsign_listener : nil,
               FREEZE_DIST       : 400.0,
+              comms             : nil,
+              message           : nil,
               loopid  : 0 };
 
   var carriers =
@@ -122,6 +128,17 @@ Manager.update = func {
     return;
   }
 
+# LSO comms
+  var message = me.rplayer.getNode(mp_message).getValue();
+  if (message != ""){
+
+    if (message != me.message){
+      setprop("/sim/messages/approach", message);
+    }
+
+    me.message = message;
+  }
+
   carrier_pos.set_latlon(me.carrier.getNode(lat).getValue(),
                          me.carrier.getNode(lon).getValue(),
                          me.carrier.getNode(alt).getValue());
@@ -143,29 +160,53 @@ Manager.update = func {
     distance_to_master * math.sin(v);
   var along_track_error  =
     distance_to_master * math.cos(v);
+  var master_tgt_hdg = (me.rplayer.getNode(mp_tgt_hdg).getValue());
+  var master_tgt_spd = (me.rplayer.getNode(mp_tgt_spd).getValue());
+  var master_turn_radius = (me.rplayer.getNode(mp_turn_radius).getValue());
 
-  # Controller.
-  var set_course =
-    normalize_course(180.0/math.pi *
-                     (math.abs(cross_track_error) < cross_course_fadeout ?
-                      math.pow
-                       (math.abs(cross_track_error/cross_course_fadeout),2) :
-                      1.0) *
-                     math.atan2(cross_course_gain * cross_track_error,
-                                along_track_error) +
-                     master_course);
-  # Limit the course to +/-cross_course_limit degrees off the master's course.
-  if (set_course - master_course > cross_course_limit) {
-    set_course = normalize_course(master_course + cross_course_limit);
-  } else if (set_course - master_course < -cross_course_limit) {
-    set_course = normalize_course(master_course - cross_course_limit);
+  var diff = master_course - master_tgt_hdg;
+
+  if (diff > 180)
+      diff -= 360;
+  elsif (diff < -180)
+      diff += 360;
+
+  if ( diff < -5 or diff > 5){
+      # major course alteration - we'll just use target heading from
+      # master until it's nearly complete
+      var set_course = master_tgt_hdg;
+  } else {
+      # Use Controller.
+      var set_course =
+        normalize_course(180.0/math.pi *
+                         (math.abs(cross_track_error) < cross_course_fadeout ?
+                          math.pow
+                           (math.abs(cross_track_error/cross_course_fadeout),2) :
+                          1.0) *
+                         math.atan2(cross_course_gain * cross_track_error,
+                                    along_track_error) +
+                         master_course);
+      # Limit the course to +/-cross_course_limit degrees off the master's course.
+      if (set_course - master_course > cross_course_limit) {
+        set_course = normalize_course(master_course + cross_course_limit);
+      } else if (set_course - master_course < -cross_course_limit) {
+        set_course = normalize_course(master_course - cross_course_limit);
+      }
+
   }
+  var spd_diff = master_speed - master_tgt_spd;
 
-  var set_speed  =
-    master_speed +
-    0.01 * along_track_error;
-  if (set_speed > master_speed + 5.0) set_speed = master_speed + 5.0;
-  if (set_speed < master_speed - 5.0) set_speed = master_speed - 5.0;
+  if ( spd_diff < -5 or spd_diff > 5){
+# major speed alteration - we'll just use target speed from
+# master until it's nearly complete
+      var set_speed = master_tgt_spd;
+  } else {
+      var set_speed  =
+          master_speed +
+          0.01 * along_track_error;
+      if (set_speed > master_speed + 5.0) set_speed = master_speed + 5.0;
+      if (set_speed < master_speed - 5.0) set_speed = master_speed - 5.0;
+  }
 
   # publish controller settings.
   me.carrier.getNode("mp-control/bearing-to-master-deg", 1).
@@ -182,6 +223,10 @@ Manager.update = func {
 
   me.carrier.getNode("mp-control/set-speed-kts", 1).setValue(set_speed);
   me.carrier.getNode("mp-control/set-course-deg", 1).setValue(set_course);
+  me.carrier.getNode("mp-control/tgt-hdg-deg", 1).setValue(master_tgt_hdg);
+  me.carrier.getNode("mp-control/tgt-spd-kts", 1).setValue(master_tgt_spd);
+  me.carrier.getNode("mp-control/turn-radius-ft", 1).setValue(master_turn_radius);
+
 
   if (aircraft_pos.direct_distance_to(carrier_pos) > me.FREEZE_DIST) {
     # Latch the local AI carrier to the remote player's
@@ -241,6 +286,7 @@ Manager.die = func {
 }
 ##################################################
 Manager.start = func {
+            print("initializing lso comms ... ");
   me.loopid += 1;
   print("MPCarriers ... " ~ me.carrier_name ~ " for " ~
         me.rplayer.getPath() ~ " activated.");

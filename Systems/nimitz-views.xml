@@ -196,9 +196,9 @@
 			<at-model-idx type="int">0</at-model-idx>
 			<ground-level-nearplane-m type="double">0.1f</ground-level-nearplane-m>
 			<heading-offset-deg>188.5</heading-offset-deg>
-			<x-offset-m>-9</x-offset-m><!-- right -->
-			<y-offset-m>21.3</y-offset-m><!-- up -->
-			<z-offset-m>120</z-offset-m><!-- back -->
+			<x-offset-m>-16.8979</x-offset-m><!-- right -->
+			<y-offset-m>21.9</y-offset-m><!-- up -->
+			<z-offset-m>66.685</z-offset-m><!-- back -->
 			<pitch-offset-deg>9</pitch-offset-deg>
 			<default-field-of-view-deg>25</default-field-of-view-deg>
 		</config>

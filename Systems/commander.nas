@@ -30,6 +30,8 @@ var c_control_speed   = "controls/tgt-speed-kts";
 var c_control_course  = "controls/tgt-heading-degs";
 var c_control_rudder  = "surface-positions/rudder-pos-deg";
 var c_control_mp_ctrl = "controls/mp-control";
+var c_control_radius  = "controls/turn-radius-ft";
+
 
 # Player constants
 var p_lat     = "/position/latitude-deg";
@@ -50,6 +52,10 @@ var p_controls_rudder = 0;
 var mp_rudder             = "surface-positions/rudder-pos-norm";
 var mp_speed              = "surface-positions/flap-pos-norm";
 var mp_network            = "sim/multiplay/generic/string[0]";
+var mp_message            = "sim/multiplay/generic/string[2]";
+var mp_tgt_hdg            = "sim/multiplay/generic/float[0]";
+var mp_tgt_spd            = "sim/multiplay/generic/float[1]";
+var mp_turn_radius        = "sim/multiplay/generic/float[2]";
 
 var MP_ANNOUNCE_INTERVAL  = 10.0;
 var last_announce = 0;
@@ -89,6 +95,9 @@ var update = func (id) {
   # Export commands to MP network
   setprop(mp_rudder, carrier_base.getNode(c_control_rudder).getValue());
   setprop(mp_speed, carrier_base.getNode(c_speed).getValue());
+  setprop(mp_tgt_hdg, carrier_base.getNode(c_control_course).getValue());
+  setprop(mp_tgt_spd, carrier_base.getNode(c_control_speed).getValue());
+  setprop(mp_turn_radius, carrier_base.getNode(c_control_radius).getValue());
 
   # Check and send events if needed.
   send_events();
