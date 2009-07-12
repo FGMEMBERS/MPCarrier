@@ -33,7 +33,6 @@
 		<name>shift-p</name>
 		<desc>Toggle radar display. (Bridge View only)</desc>
 	</key>
-	
 
 	<line></line>
 	<line>Course control is only possible in manual control mode.</line>
@@ -41,9 +40,9 @@
 	<line>course, to control deck elevators and deck lights, and</line>
 	<line>to select LSO commentary.</line>
 	<line></line>
-	<line>LSO Commentary defaults to ON. It is selected in LSO View when</line>
-	<line>the selected aircraft is within the coverage of the FLOLS and</line>
-	<line>its range is less than 4 nm</line>
+	<line>LSO Commentary defaults to ON. It is selected in LSO View for</line>
+	<line>the selected aircraft or in Approach View for any aircraft that</line>
+	<line>is within the coverage of the FLOLS and range is less than 4 nm</line>
 	<line></line>
 	<line>Radar Display defaults to ON. Parameters may be selected by </line>
 	<line>clicking on items in either of the CONTROL panels. Items in </line>

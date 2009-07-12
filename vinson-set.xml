@@ -66,6 +66,16 @@
 
 		<multiplay>
 			<chat_display>1</chat_display>
+			<generic>
+				<string n="2"
+								alias="/sim/messages/approach"/>
+				<float n="0"
+							 alias="controls/tgt-heading-degs"/>
+				<float n="1"
+							 alias="controls/tgt-speed-kts"/>
+				<float n="2"
+							 alias="controls/turn-radius-ft"/>
+			</generic>
 		</multiplay>
 
 		<atc>
@@ -142,6 +152,9 @@
 		<Radar>
 			<file>Aircraft/MPCarrier/Panels/MP-radar.nas</file>
 		</Radar>
+		<LSOComms>
+			<file>Aircraft/MPCarrier/Systems/lsocomms.nas</file>
+		</LSOComms>
 	</nasal>
 
 </PropertyList>
