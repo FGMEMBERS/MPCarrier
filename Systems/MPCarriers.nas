@@ -20,6 +20,9 @@ var c_heading = "orientation/true-heading-deg";
 var c_pitch   = "orientation/pitch-deg";
 var c_roll    = "orientation/roll-deg";
 var c_speed   = "velocities/speed-kts";
+var x           = "position/global-x";
+var y           = "position/global-y";
+var z           = "position/global-z";
 
 #var c_control_speed   = "controls/base-speed-kts";
 #var c_control_course  = "controls/base-course-deg";
@@ -139,23 +142,30 @@ Manager.update = func {
     me.message = message;
   }
 
-  carrier_pos.set_latlon(me.carrier.getNode(lat).getValue(),
-                         me.carrier.getNode(lon).getValue(),
-                         me.carrier.getNode(alt).getValue());
+#  carrier_pos.set_latlon(me.carrier.getNode(lat).getValue(),
+#                         me.carrier.getNode(lon).getValue(),
+#                         me.carrier.getNode(alt).getValue());
+
+  carrier_pos.set_xyz(me.carrier.getNode(x).getValue(),
+                      me.carrier.getNode(y).getValue(),
+                      me.carrier.getNode(z).getValue());
 
   # Compute the position and orientation error.
   var rplayer_pos  = geo.Coord.new(carrier_pos);
-  rplayer_pos.set_latlon(me.rplayer.getNode(lat).getValue(),
-                         me.rplayer.getNode(lon).getValue(),
-                         me.rplayer.getNode(alt).getValue());
+#  rplayer_pos.set_latlon(me.rplayer.getNode(lat).getValue(),
+#                         me.rplayer.getNode(lon).getValue(),
+#                         me.rplayer.getNode(alt).getValue());
+
+  rplayer_pos.set_xyz(me.rplayer.getNode(x).getValue(),
+                      me.rplayer.getNode(y).getValue(),
+                      me.rplayer.getNode(z).getValue());
 
   var master_course      =
     normalize_course(me.rplayer.getNode(mp_heading).getValue());
   var master_speed       = me.rplayer.getNode(mp_speed).getValue();
   var bearing_to_master  = normalize_course(carrier_pos.course_to(rplayer_pos));
   var distance_to_master = carrier_pos.direct_distance_to(rplayer_pos);
-  var v = math.pi / 180.0 *
-    normalize_course(bearing_to_master - master_course);
+  var v = D2R * normalize_course(bearing_to_master - master_course);
   var cross_track_error  =
     distance_to_master * math.sin(v);
   var along_track_error  =
@@ -171,12 +181,29 @@ Manager.update = func {
   elsif (diff < -180)
       diff += 360;
 
-  if ( diff < -5 or diff > 5){
+  if ( diff < -1.0 or diff > 1.0){
       # major course alteration - we'll just use target heading from
       # master until it's nearly complete
-      var set_course = master_tgt_hdg;
+      # print("major turn" , diff);
+      var set_course = master_tgt_hdg ;
+      var correction = 0;
+
+      if (diff < 0){
+          correction = -cross_track_error * M2FT;
+#          print("stbd turn ", correction);
+      } elsif (diff > 0){
+          correction = cross_track_error * M2FT;
+#          print("port turn ", correction);
+      } else {
+          correction = 0;
+#          print("no turn ", correction);
+      }
+
+      me.carrier.getNode("controls/turn-radius-ft", 1).setValue(master_turn_radius + correction);
+
   } else {
       # Use Controller.
+      me.carrier.getNode("controls/turn-radius-ft", 1).setValue(master_turn_radius);
       var set_course =
         normalize_course(180.0/math.pi *
                          (math.abs(cross_track_error) < cross_course_fadeout ?
@@ -196,19 +223,23 @@ Manager.update = func {
   }
   var spd_diff = master_speed - master_tgt_spd;
 
-  if ( spd_diff < -5 or spd_diff > 5){
+  if ( spd_diff < -1 or spd_diff > 1){
 # major speed alteration - we'll just use target speed from
 # master until it's nearly complete
-      var set_speed = master_tgt_spd;
+      var set_speed = master_tgt_spd +
+          0.01 * along_track_error;
+      if (set_speed > master_tgt_spd + 5.0) set_speed = master_tgt_spd + 5.0;
+      if (set_speed < master_tgt_spd - 5.0) set_speed = master_tgt_spd - 5.0;
   } else {
-      var set_speed  =
-          master_speed +
+      var set_speed  = master_speed +
           0.01 * along_track_error;
       if (set_speed > master_speed + 5.0) set_speed = master_speed + 5.0;
       if (set_speed < master_speed - 5.0) set_speed = master_speed - 5.0;
   }
 
   # publish controller settings.
+  me.carrier.getNode("mp-control/bearing-to-master-rel-deg", 1).
+    setValue(v);
   me.carrier.getNode("mp-control/bearing-to-master-deg", 1).
     setValue(bearing_to_master);
   me.carrier.getNode("mp-control/distance-to-master-m", 1).
@@ -223,10 +254,9 @@ Manager.update = func {
 
   me.carrier.getNode("mp-control/set-speed-kts", 1).setValue(set_speed);
   me.carrier.getNode("mp-control/set-course-deg", 1).setValue(set_course);
-  me.carrier.getNode("mp-control/tgt-hdg-deg", 1).setValue(master_tgt_hdg);
+  me.carrier.getNode("mp-control/tgt-hdg-deg", 1).setValue(sprintf ( "%03.1d", master_tgt_hdg));
   me.carrier.getNode("mp-control/tgt-spd-kts", 1).setValue(master_tgt_spd);
   me.carrier.getNode("mp-control/turn-radius-ft", 1).setValue(master_turn_radius);
-
 
   if (aircraft_pos.direct_distance_to(carrier_pos) > me.FREEZE_DIST) {
     # Latch the local AI carrier to the remote player's
