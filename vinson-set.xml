@@ -64,6 +64,10 @@
 			<vinson-callsign type="string"></vinson-callsign>
 		</mp-carriers>
 
+		<current-view>
+			<deck-park type="bool">1</deck-park>
+		</current-view>
+
 		<multiplay>
 			<chat_display>1</chat_display>
 			<generic>
@@ -121,6 +125,8 @@
 			<heading-marker type="bool">false</heading-marker>
 			<reference-range-nm type="double">100</reference-range-nm>
 			<limit-deg type="int">180</limit-deg>
+			<antenna-ht-ft type="double">150</antenna-ht-ft>
+			<update-interval-sec>10</update-interval-sec>
 			<font>
 				<name type="string">typewriter.txf</name>
 				<size type="float">5</size>
@@ -133,6 +139,15 @@
 				</color>
 			</font>
 		</radar>
+		<comm n="0">
+			<frequencies>
+				<selected-mhz type="double">112.700</selected-mhz>
+				<standby-mhz type="double">120.500</standby-mhz>
+			</frequencies>
+			<volume type="double">0.6</volume>
+			<serviceable>true</serviceable>
+			<ptt type="int">0</ptt>
+		</comm>
 	</instrumentation>
 
 	<nasal>
