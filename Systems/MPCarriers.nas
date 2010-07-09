@@ -1,9 +1,8 @@
 ###############################################################################
-## $Id$
 ##
 ## Nasal module for connecting a local AI carrier to a MP player.
 ##
-##  Copyright (C) 2007 - 2009  Anders Gidenstam  (anders(at)gidenstam.org)
+##  Copyright (C) 2007 - 2010  Anders Gidenstam  (anders(at)gidenstam.org)
 ##  Copyright (C) 2009  Vivian Meazza
 ##  This file is licensed under the GPL license version 2 or later.
 ##
