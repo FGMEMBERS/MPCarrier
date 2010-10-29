@@ -1,5 +1,4 @@
 ###############################################################################
-## $Id$
 ##
 ## Nasal for controling an MP Carrier Radar
 ##
@@ -8,7 +7,7 @@
 ##
 ###############################################################################
 
-radar=nil;
+var radar=nil;
 
 var init_radar = func {
 
@@ -20,7 +19,7 @@ var init_radar = func {
 
 var RADAR = {
 	new : func(){
-		m = { parents : [RADAR] };
+		var m = { parents : [RADAR] };
 
 		me.RADAR_target_callsign = props.globals.initNode("instrumentation/radar/target-callsign"," ","STRING");
 		me.RADAR_target_id = props.globals.initNode("instrumentation/radar/target-id");

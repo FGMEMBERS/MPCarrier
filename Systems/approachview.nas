@@ -3,7 +3,7 @@
 # Locks the heading and pitch offsets to the 
 # defined values
 
-app_view_handler = {
+var app_view_handler = {
     init: func (node) {
         print("initializing app view ... ");
         me.viewN = node;
