@@ -1,9 +1,8 @@
 <?xml version="1.0"?>
-<!-- $Id$ -->
 <!--
   Nimitz -set file for FlightGear.
 
-  Copyright (C) 2007 - 2009  Anders Gidenstam  (anders(at)gidenstam.org)
+  Copyright (C) 2007 - 2010  Anders Gidenstam  (anders(at)gidenstam.org)
   This file is released under the GPL license version 2 or later.
 -->
 <PropertyList include="common.xml">
@@ -94,6 +93,18 @@
 		<lsoview>
 			<file>Aircraft/MPCarrier/Systems/lsoview.nas</file>
 		</lsoview>
+		<Radar>
+			<file>Aircraft/MPCarrier/Panels/MP-radar.nas</file>
+		</Radar>
+		<LSOComms>
+			<file>Aircraft/MPCarrier/Systems/lsocomms.nas</file>
+		</LSOComms>
+		<walkview>
+			<file>Aircraft/Generic/WalkView/walkview.nas</file>
+		</walkview>
+		<walkviews>
+			<file>Aircraft/MPCarrier/Systems/nimitz-walk-views.nas</file>
+		</walkviews>
 	</nasal>
 
 </PropertyList>

@@ -34,7 +34,7 @@
 
 
   <input>
-    <keyboard>
+    <keyboard include="Systems/walk-view-keys.xml">
       <key n="22">
         <name>Ctrl-V</name>
         <desc>Select initial view (view 0).</desc>

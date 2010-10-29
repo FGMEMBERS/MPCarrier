@@ -1,9 +1,8 @@
 ###############################################################################
-## $Id$
 ##
 ## Nasal for controling an AI carrier.
 ##
-##  Copyright (C) 2007 - 2009  Anders Gidenstam  (anders(at)gidenstam.org)
+##  Copyright (C) 2007 - 2010  Anders Gidenstam  (anders(at)gidenstam.org)
 ##  Copyright (C) 2009  Vivian Meazza
 ##  This file is licensed under the GPL license version 2 or later.
 ##
@@ -208,6 +207,15 @@ var init = func {
       props.globals.getNode(p, 1).alias(carrier_base.getNode(p));
       p = "controls/tgt-speed-kts";
       props.globals.getNode(p, 1).alias(carrier_base.getNode(p));
+
+      # Avoid ugly error messages if the current carrier doesn't
+      # have a walk view.
+      if (!contains(globals, "walkview")) {
+        globals.walkview = {
+            forward   : func {},
+            side_step : func {}
+        };
+      }
 
       return;
     }

@@ -1,5 +1,4 @@
 <?xml version="1.0"?>
-<!-- $Id$ -->
 <!--
   Nimitz views for FlightGear.
 
@@ -9,8 +8,7 @@
 -->
 <PropertyList>
 
-	<chase-distance-m type="double"
-										archive="y">-400.0</chase-distance-m>
+	<chase-distance-m type="double">-400.0</chase-distance-m>
 
 	<!-- Views section -->
 	<view n="0">
@@ -39,8 +37,7 @@
 
 	<view n="1">
 		<name>Helicopter View</name>
-		<enabled type="bool"
-						 userarchive="y">true</enabled>
+		<enabled type="bool">true</enabled>
 		<type>lookat</type>
 		<config>
 			<from-model type="bool">false</from-model>
@@ -66,8 +63,7 @@
 
 	<view n="2">
 		<name>Chase View</name>
-		<enabled type="bool"
-						 userarchive="y">true</enabled>
+		<enabled type="bool">true</enabled>
 		<type>lookat</type>
 		<config>
 			<from-model type="bool">false</from-model>
