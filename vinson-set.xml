@@ -199,6 +199,12 @@
 		<LSOComms>
 			<file>Aircraft/MPCarrier/Systems/lsocomms.nas</file>
 		</LSOComms>
+		<walkview>
+			<file>Aircraft/Generic/WalkView/walkview.nas</file>
+		</walkview>
+		<walkviews>
+			<file>Aircraft/MPCarrier/Systems/vinson-walk-views.nas</file>
+		</walkviews>
 	</nasal>
 
 </PropertyList>
