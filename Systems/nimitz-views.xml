@@ -224,6 +224,40 @@
 		</config>
 	</view>
 
+	<view n="105">
+		<name>Flightdeck Officer View</name>
+		<type>lookfrom</type>
+		<config>
+			<internal type="bool">true</internal>
+			<from-model type="bool">false</from-model>
+			<from-model-idx type="int">0</from-model-idx>
+			<eye-lat-deg-path>/position/latitude-deg</eye-lat-deg-path>
+			<eye-lon-deg-path>/position/longitude-deg</eye-lon-deg-path>
+			<eye-alt-ft-path>/position/altitude-ft</eye-alt-ft-path>
+			<eye-heading-deg-path>/orientation/heading-deg</eye-heading-deg-path>
+			<eye-pitch-deg-path>/orientation/pitch-deg</eye-pitch-deg-path>
+			<eye-roll-deg-path>/orientation/roll-deg</eye-roll-deg-path>
+			<at-model type="bool">false</at-model>
+			<at-model-idx type="int">0</at-model-idx>
+			<ground-level-nearplane-m type="double">0.1f</ground-level-nearplane-m>
+			<!--<x-offset-m>23.2669</x-offset-m>
+			--><!-- right --><!--
+			<y-offset-m>35.082</y-offset-m>
+			--><!-- up --><!--
+			<z-offset-m>95.1064</z-offset-m>
+			--><!-- back -->
+			<heading-offset-deg>180</heading-offset-deg>
+			<x-offset-m>0</x-offset-m>
+			<!-- right -->
+			<y-offset-m>21.925</y-offset-m>
+			<!-- up -->
+			<z-offset-m>40.0</z-offset-m>
+			<!-- back -->
+			<pitch-offset-deg>0</pitch-offset-deg>
+			<default-field-of-view-deg>60</default-field-of-view-deg>
+		</config>
+	</view>
+
 	<!--<view n="105">
 		<name>ATC View</name>
 		<type>lookat</type>
