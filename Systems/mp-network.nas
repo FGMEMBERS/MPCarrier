@@ -1,9 +1,8 @@
 ###############################################################################
-## $Id$
 ##
 ## MPCarrier multiplayer message network.
 ##
-##  Copyright (C) 2009  Anders Gidenstam  (anders(at)gidenstam.org)
+##  Copyright (C) 2009 - 2011  Anders Gidenstam  (anders(at)gidenstam.org)
 ##  Copyright (C) 2009  Vivian Meazza
 ##  This file is licensed under the GPL license v2 or later.
 ##
@@ -19,12 +18,6 @@ var get_carrier = func (pilot) {
   if (contains(Manager_instances, pilot.getIndex())) {
       return Manager_instances[pilot.getIndex()];
   }
-#  foreach (var carrier; Manager_instances) {
-#    if (carrier.rplayer.getNode("callsign").getValue() ==
-#        player.getNode("callsign").getValue()) {
-#      return carrier;
-#    }
-#  }
   print("Error: " ~ pilot.getPath() ~ " is not a recognized MPCarrier.");
   return nil;
 }
@@ -73,49 +66,52 @@ var handle_message = func (sender, msg) {
 #    print("Message from "~ sender.getNode("callsign").getValue() ~
 #          " size: " ~ size(msg));
 #    debug.dump(msg);
-    var type = msg[0];
+    var type    = msg[0];
+    var carrier = get_carrier(sender);
+    if (carrier == nil) return;
+
     if (type == message_id["elevator_state"][0]) {
         #print("MPCarrier: Elevator state");
         var state =
             Binary.decodeByte(substr(msg, 1));
         #debug.dump(state);
-        get_carrier(sender).set_property(MPCarriers.c_deck_elev, state);
+        carrier.set_property(MPCarriers.c_deck_elev, state);
     } else if (type == message_id["decklight_state"][0]) {
         #print("MPCarrier: Deck light state");
         var state =
             Binary.decodeByte(substr(msg, 1));
         #debug.dump(state);
-        get_carrier(sender).set_property(MPCarriers.c_deck_lights, state);
+        carrier.set_property(MPCarriers.c_deck_lights, state);
     } else if (type == message_id["floodlight_state"][0]) {
         #print("MPCarrier: Flood light state");
         var state =
             Binary.decodeDouble(substr(msg, 1));
         #debug.dump(state);
-        get_carrier(sender).set_property(MPCarriers.c_flood_lights, state);
+        carrier.set_property(MPCarriers.c_flood_lights, state);
     } else if (type == message_id["launch_state"][0]) {
         #print("MPCarrier: launch state");
         var state =
             Binary.decodeDouble(substr(msg, 1));
         #debug.dump(state);
-        get_carrier(sender).set_property(MPCarriers.c_turn_to_launch_hdg, state);
+        carrier.set_property(MPCarriers.c_turn_to_launch_hdg, state);
     } else if (type == message_id["recovery_state"][0]) {
         #print("MPCarrier: recovery state");
         var state =
             Binary.decodeDouble(substr(msg, 1));
         #debug.dump(state);
-        get_carrier(sender).set_property(MPCarriers.c_turn_to_recvry_hdg, state);
+        carrier.set_property(MPCarriers.c_turn_to_recvry_hdg, state);
     } else if (type == message_id["base_state"][0]) {
         #print("MPCarrier: base state");
         var state =
             Binary.decodeDouble(substr(msg, 1));
         #debug.dump(state);
-        get_carrier(sender).set_property(MPCarriers.c_turn_to_base_co, state);
+        carrier.set_property(MPCarriers.c_turn_to_base_co, state);
     } else if (type == message_id["wave_off_state"][0]) {
 #       print("MPCarrier: wave off state");
         var state =
             Binary.decodeDouble(substr(msg, 1));
         #debug.dump(state);
-        get_carrier(sender).set_property(MPCarriers.c_wave_off_lights, state);
+        carrier.set_property(MPCarriers.c_wave_off_lights, state);
     }
 }
 
