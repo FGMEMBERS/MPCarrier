@@ -1,19 +1,11 @@
-<!-- $Id$ -->
+<?xml version="1.0"?>
 <!--
-  Multiplayer Eisenhower for FlightGear.
+  Multiplayer carrier Eisenhower for FlightGear.
 
-  Copyright (C) 2007 - 2008  Anders Gidenstam  (anders(at)gidenstam.org)
+  Copyright (C) 2007 - 2012  Anders Gidenstam  (anders(at)gidenstam.org)
   This file is released under the GPL license version 2 or later.
 -->
 <PropertyList>
-
- <path>../../../Models/Geometry/null.ac</path>
- <offsets>
-  <!-- x/y/z == back/right/up -->
-  <x-m> 0.0 </x-m>
-  <y-m> 0.0 </y-m>
-  <z-m> -500.0 </z-m>
- </offsets>
 
  <nasal>
   <load>
@@ -24,18 +16,21 @@
 var rplayer = cmdarg();
 print("LOAD MP-Eisenhower " ~ rplayer.getPath());
 
-# Set aircraft type property.
-rplayer.getNode("sim/model/ac-type", 1).setValue("MP-Eisenhower");
-
 # Load the main MPCarriers Nasal module if needed.
 if (!contains(globals, "MPCarriers")) {
-  if (contains(io, "load_nasal")) {
-    io.load_nasal(getprop("/sim/fg-root") ~
-                  "/Aircraft/MPCarrier/Systems/MPCarriers.nas", "MPCarriers");
+  var base = "/MPCarrier/Systems/MPCarriers.nas";
+  var file = props.globals.getNode("/sim/fg-root").getValue() ~
+             "/Aircraft" ~ base;
+  if (io.stat(file) != nil) {
+      io.load_nasal(file, "MPCarriers");
   } else {
-    debug.load_nasal(getprop("/sim/fg-root") ~
-                     "/Aircraft/MPCarrier/Systems/MPCarriers.nas",
-                     "MPCarriers");
+    foreach (var d; props.globals.getNode("/sim").getChildren("fg-aircraft")) {
+      var file = d.getValue() ~ base;
+      if (io.stat(file) != nil) {
+        io.load_nasal(file, "MPCarriers");
+        break;
+      }
+    }
   }
 }
 
@@ -45,14 +40,11 @@ var accept_callsign = "/sim/mp-carriers/eisenhower-callsign";
 
 var init = func {
   # Initialize the callsign property if not done already.
-  if (props.globals.getNode(accept_callsign) == nil) {
-      props.globals.getNode(accept_callsign,
-                            1).setValue("");
-  }
+  props.globals.initNode(accept_callsign, "", "STRING");
 
   manager = MPCarriers.Manager.new(rplayer,
                                    "Eisenhower",
-                                   props.globals.getNode(accept_callsign, 1));
+                                   props.globals.getNode(accept_callsign));
 }
 
 settimer(init, 15);
@@ -62,10 +54,7 @@ settimer(init, 15);
   <unload>
 ##############################################################################
    print("UNLOAD MP-Eisenhower ", cmdarg().getPath());
-   # Unset aircraft type property.
-   cmdarg().getNode("sim/model/ac-type", 1).setValue("");
-   cmdarg().getNode("sim/model/ac-type", 1).remove();
-   manager.die();
+   if (manager != nil) manager.die();
 ##############################################################################
   </unload>
  </nasal>

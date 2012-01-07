@@ -2,7 +2,7 @@
 <!--
   Common part of MP carriers for FlightGear.
 
-  Copyright (C) 2007 - 2010  Anders Gidenstam  (anders(at)gidenstam.org)
+  Copyright (C) 2007 - 2012  Anders Gidenstam  (anders(at)gidenstam.org)
   Copyright (C) 2009  Vivian Meazza
   This file is released under the GPL license version 2 or later.
 -->
@@ -34,7 +34,7 @@
 
 
   <input>
-    <keyboard include="../Generic/WalkView/walk-view-keys.xml">
+    <keyboard include="Aircraft/Generic/WalkView/walk-view-keys.xml">
       <key n="22">
         <name>Ctrl-V</name>
         <desc>Select initial view (view 0).</desc>

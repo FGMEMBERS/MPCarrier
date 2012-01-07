@@ -2,7 +2,7 @@
 ##
 ## Nasal module for connecting a local AI carrier to a MP player.
 ##
-##  Copyright (C) 2007 - 2011  Anders Gidenstam  (anders(at)gidenstam.org)
+##  Copyright (C) 2007 - 2012  Anders Gidenstam  (anders(at)gidenstam.org)
 ##  Copyright (C) 2009  Vivian Meazza
 ##  This file is licensed under the GPL license version 2 or later.
 ##
@@ -94,8 +94,8 @@ Manager.new = func (player = nil, carrier_name = nil, callsign = nil) {
   }
   print("MPCarriers ... Failure: The AI carrier " ~ carrier_name ~
         " was not found.");
-  print("MPCarriers: The nimitz_demo AI scenario must be active.");
-  return obj;
+  print("MPCarriers: The relevant carrier AI scenario must be active.");
+  return nil;
 }
 ##################################################
 Manager.is_valid = func {
@@ -105,7 +105,9 @@ Manager.is_valid = func {
 }
 ##################################################
 Manager.is_active = func {
-  return ((me.rplayer.getNode("callsign") != nil) and
+  return (me.is_valid() and
+          (me.rplayer.getNode("callsign") != nil) and
+          # FIXME: Sometimes the cmp() call here gets an invalid argument.
           cmp(me.rplayer.getNode("callsign").getValue(),
               me.accept_callsign.getValue()) == 0);
 }
@@ -302,6 +304,8 @@ Manager.stop = func {
 }
 ##################################################
 Manager.die = func {
+  if (me.callsign_listener == nil) return;
+
   removelistener(me.callsign_listener);
   delete(MPCarriersNW.Manager_instances, me.rplayer.getIndex());
   me.loopid += 1;
@@ -312,6 +316,7 @@ Manager.die = func {
       me.carrier.getNode(c_control_mp_ctrl).setBoolValue(0);
   }, 5.0);
 
+  me.callsign_listener = nil;
   print("MPCarriers ... " ~ me.carrier_name ~ " for " ~
         me.rplayer.getPath() ~ " destroyed.");
 }
@@ -344,22 +349,16 @@ var normalize_course = func(c) {
 # Return a hash containing all nearby carrier players
 # indexed on MP-carrier type
 var find_carrier_players = func {
-    var mpplayers =
-        props.globals.getNode("/ai/models").getChildren("multiplayer");
-
     var res = {};
-    foreach (var pilot; mpplayers) {
-        if ((pilot.getNode("valid") != nil) and
-            (pilot.getNode("valid").getValue()) and
-            (pilot.getNode("sim/model/ac-type") != nil)) {
-            var type = pilot.getNode("sim/model/ac-type").getValue();
+    foreach (var c; keys(MPCarriersNW.Manager_instances)) {
+        if (MPCarriersNW.Manager_instances[c].is_valid()) {
+            var type  = MPCarriersNW.Manager_instances[c].carrier_name;
+            var pilot = MPCarriersNW.Manager_instances[c].rplayer;
 
-            if (streq("MP-", substr(type, 0, 3))) {
-                if (!contains(res, type)) {
-                    res[type] = [pilot.getNode("callsign").getValue()];
-                } else {
-                    append(res[type], pilot.getNode("callsign").getValue());
-                }
+            if (!contains(res, type)) {
+                res[type] = [pilot.getNode("callsign").getValue()];
+            } else {
+                append(res[type], pilot.getNode("callsign").getValue());
             }
         }
     }
@@ -384,11 +383,11 @@ carrier_dialog.init = func (x = nil, y = nil) {
     me.dialog = nil;
     me.namenode = props.Node.new({"dialog-name" : me.title });
     me.listeners = [];
-    me.carriers = { "MP-Nimitz"     : "nimitz-callsign",
-                    "MP-Eisenhower" : "eisenhower-callsign",
-                    "MP-Foch"       : "foch-callsign",
-                    "MP-Clemenceau" : "clemenceau-callsign",
-                    "MP-Vinson"     : "vinson-callsign"};
+    me.carriers = { "Nimitz"     : "nimitz-callsign",
+                    "Eisenhower" : "eisenhower-callsign",
+                    "Foch"       : "foch-callsign",
+                    "Clemenceau" : "clemenceau-callsign",
+                    "Vinson"     : "vinson-callsign"};
 }
 ############################################################
 carrier_dialog.create = func {
@@ -520,8 +519,19 @@ var as_num = func (val, default=0.0) {
 
 # Load the MPCarrier MP network.
 if (!contains(globals, "MPCarriersNW")) {
-  io.load_nasal(getprop("/sim/fg-root") ~
-                "/Aircraft/MPCarrier/Systems/mp-network.nas",
-                "MPCarriersNW");
+  var base = "/MPCarrier/Systems/mp-network.nas";
+  var file = props.globals.getNode("/sim/fg-root").getValue() ~
+             "/Aircraft" ~ base;
+  if (io.stat(file) != nil) {
+      io.load_nasal(file, "MPCarriersNW");
+  } else {
+    foreach (var d; props.globals.getNode("/sim").getChildren("fg-aircraft")) {
+      var file = d.getValue() ~ base;
+      if (io.stat(file) != nil) {
+        io.load_nasal(file, "MPCarriersNW");
+        break;
+      }
+    }
+  }
   MPCarriersNW.mp_network_init(0);
 }

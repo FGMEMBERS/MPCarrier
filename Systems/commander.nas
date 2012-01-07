@@ -2,7 +2,7 @@
 ##
 ## Nasal for controling an AI carrier.
 ##
-##  Copyright (C) 2007 - 2010  Anders Gidenstam  (anders(at)gidenstam.org)
+##  Copyright (C) 2007 - 2012  Anders Gidenstam  (anders(at)gidenstam.org)
 ##  Copyright (C) 2009  Vivian Meazza
 ##  This file is licensed under the GPL license version 2 or later.
 ##
@@ -182,8 +182,8 @@ var init = func {
       loopid += 1;
 
       # Load the MPCarrier MP network.
-      io.load_nasal(getprop("/sim/fg-root") ~
-                    "/Aircraft/MPCarrier/Systems/mp-network.nas",
+      io.load_nasal(getprop("/sim/aircraft-dir") ~
+                    "/Systems/mp-network.nas",
                     "MPCarriersNW");
       MPCarriersNW.mp_network_init(1);
 
