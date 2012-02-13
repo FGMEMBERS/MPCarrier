@@ -306,7 +306,6 @@ Manager.stop = func {
 Manager.die = func {
   if (me.callsign_listener == nil) return;
 
-  removelistener(me.callsign_listener);
   delete(MPCarriersNW.Manager_instances, me.rplayer.getIndex());
   me.loopid += 1;
 
@@ -316,6 +315,7 @@ Manager.die = func {
       me.carrier.getNode(c_control_mp_ctrl).setBoolValue(0);
   }, 5.0);
 
+  removelistener(me.callsign_listener);
   me.callsign_listener = nil;
   print("MPCarriers ... " ~ me.carrier_name ~ " for " ~
         me.rplayer.getPath() ~ " destroyed.");
