@@ -152,7 +152,7 @@
 				<chunk>
 					<type>number-value</type>
 					<property>ai/models/carrier/controls/turn-to-recovery-hdg</property>
-					<format>Turn to Recovery Couse: ON</format>
+					<format>Turn to Recovery Course: ON</format>
 				</chunk>
 			</chunks>
 			<transformations>
@@ -224,7 +224,7 @@
 				<chunk>
 					<type>number-value</type>
 					<property>ai/models/carrier/controls/turn-to-base-course</property>
-					<format>Turn to Base Couse: ON</format>
+					<format>Turn to Base Course: ON</format>
 				</chunk>
 			</chunks>
 			<transformations>
@@ -260,7 +260,7 @@
 				<chunk>
 					<type>number-value</type>
 					<property>ai/models/carrier/controls/turn-to-base-course</property>
-					<format>Turn to Base Couse: OFF</format>
+					<format>Turn to Base Course: OFF</format>
 				</chunk>
 			</chunks>
 			<transformations>
