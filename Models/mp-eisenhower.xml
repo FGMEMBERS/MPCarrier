@@ -16,22 +16,10 @@
 var rplayer = cmdarg();
 print("LOAD MP-Eisenhower " ~ rplayer.getPath());
 
-# Load the main MPCarriers Nasal module if needed.
+## Load the main MPCarriers Nasal module if needed.
 if (!contains(globals, "MPCarriers")) {
-  var base = "/MPCarrier/Systems/MPCarriers.nas";
-  var file = props.globals.getNode("/sim/fg-root").getValue() ~
-             "/Aircraft" ~ base;
-  if (io.stat(file) != nil) {
-      io.load_nasal(file, "MPCarriers");
-  } else {
-    foreach (var d; props.globals.getNode("/sim").getChildren("fg-aircraft")) {
-      var file = d.getValue() ~ base;
-      if (io.stat(file) != nil) {
-        io.load_nasal(file, "MPCarriers");
-        break;
-      }
-    }
-  }
+  var base = "Aircraft/MPCarrier/Systems/MPCarriers.nas";
+  io.load_nasal(resolvepath(base), "MPCarriers");
 }
 
 # Create manager class.
