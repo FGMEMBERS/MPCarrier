@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+ 
+<PropertyList>
+ <fx>
+  <engine>
+   <name>engine</name>
+   <mode>looped</mode>
+   <path>Aircraft/MPCarrier/Sounds/ferry-engines.wav</path>
+   <volume>
+    <property>/controls/sound-volume</property>
+    <min>0.2</min>
+    <max>1.0</max>
+    <offset>0.0</offset>
+   </volume>
+   <pitch>
+    <property>/controls/sound-volume</property>
+    <min>0.0</min>
+    <max>1.0</max>
+   </pitch>
+  </engine>
+
+  <rain>
+    <name>rain</name>
+    <mode>looped</mode>
+    <path>Aircraft/MPCarrier/Sounds/rain.wav</path>
+    <condition>
+      <greater-than>
+        <property>/environment/metar/rain-norm</property>
+        <value>0.2</value>
+      </greater-than>
+    </condition>
+    <volume>
+      <property>/environment/metar/rain-norm</property>
+      <factor>1.00</factor>
+      <offset>0.00</offset>
+      <min>0.4</min>
+      <max>0.9</max>
+    </volume>
+    <pitch>
+      <property>/velocities/speed-kts</property>
+      <factor>0.028</factor>
+      <offset>1.0</offset>
+    </pitch>
+  </rain>
+
+ </fx>
+</PropertyList>

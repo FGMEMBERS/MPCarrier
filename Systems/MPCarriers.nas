@@ -207,15 +207,33 @@ Manager.update = func {
   } else {
       # Use Controller.
       me.carrier.getNode("controls/turn-radius-ft", 1).setValue(master_turn_radius);
-      var set_course =
-        normalize_course(180.0/math.pi *
-                         (math.abs(cross_track_error) < cross_course_fadeout ?
-                          math.pow
-                           (math.abs(cross_track_error/cross_course_fadeout),2) :
-                          1.0) *
-                         math.atan2(cross_course_gain * cross_track_error,
-                                    along_track_error) +
-                         master_course);
+
+
+      # 2012-05-10 M.Kraus division to 0 if carrier is aircraft for other carrier :-(
+      #  var set_course =
+      #    normalize_course(180.0/math.pi *
+      #                     (math.abs(cross_track_error) < cross_course_fadeout ?
+      #                      math.pow
+      #                       (math.abs(cross_track_error/cross_course_fadeout),2) :
+      #                     1.0) *
+      #                     math.atan2(cross_course_gain * cross_track_error,
+      #                                along_track_error) +
+      #                     master_course);
+
+      if (cross_track_error > 0){
+        var set_course =
+          normalize_course(180.0/math.pi *
+                           (math.abs(cross_track_error) < cross_course_fadeout ?
+                            math.pow
+                             (math.abs(cross_track_error/cross_course_fadeout),2) :
+                            1.0) *
+                           math.atan2(cross_course_gain * cross_track_error,
+                                      along_track_error) +
+                           master_course);
+      }else{
+        var set_course = 0;
+      }
+
       # Limit the course to +/-cross_course_limit degrees off the master's course.
       if (set_course - master_course > cross_course_limit) {
         set_course = normalize_course(master_course + cross_course_limit);
@@ -387,7 +405,10 @@ carrier_dialog.init = func (x = nil, y = nil) {
                     "Eisenhower" : "eisenhower-callsign",
                     "Foch"       : "foch-callsign",
                     "Clemenceau" : "clemenceau-callsign",
-                    "Vinson"     : "vinson-callsign"};
+                    "Vinson"     : "vinson-callsign",
+                    "Lodi"       : "lodi-callsign",
+                    "Tabor"      : "tabor-callsign",
+                    "HMS-Victorious" : "victorious-callsign"};
 }
 ############################################################
 carrier_dialog.create = func {
@@ -519,8 +540,19 @@ var as_num = func (val, default=0.0) {
 
 # Load the MPCarrier MP network.
 if (!contains(globals, "MPCarriersNW")) {
-  var base = "Aircraft/MPCarrier/Systems/mp-network.nas";
-  io.load_nasal(resolvepath(base), "MPCarriersNW");
+  var base = "/MPCarrier/Systems/mp-network.nas";
+  var file = props.globals.getNode("/sim/fg-root").getValue() ~
+             "/Aircraft" ~ base;
+  if (io.stat(file) != nil) {
+      io.load_nasal(file, "MPCarriersNW");
+  } else {
+    foreach (var d; props.globals.getNode("/sim").getChildren("fg-aircraft")) {
+      var file = d.getValue() ~ base;
+      if (io.stat(file) != nil) {
+        io.load_nasal(file, "MPCarriersNW");
+        break;
+      }
+    }
+  }
   MPCarriersNW.mp_network_init(0);
-  
 }

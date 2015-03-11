@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!--
-  Multiplayer carrier Clemenceau for FlightGear.
+  Multiplayer carrier Lodi for FlightGear.
 
   Copyright (C) 2007 - 2012  Anders Gidenstam  (anders(at)gidenstam.org)
   This file is released under the GPL license version 2 or later.
@@ -14,7 +14,7 @@
 # aircraft.
 
 var rplayer = cmdarg();
-print("LOAD MP-Clemenceau " ~ rplayer.getPath());
+print("LOAD MP-Lodi " ~ rplayer.getPath());
 
 # Load the main MPCarriers Nasal module if needed.
 if (!contains(globals, "MPCarriers")) {
@@ -36,14 +36,14 @@ if (!contains(globals, "MPCarriers")) {
 
 # Create manager class.
 var manager = nil;
-var accept_callsign = "/sim/mp-carriers/clemenceau-callsign";
+var accept_callsign = "/sim/mp-carriers/lodi-callsign";
 
 var init = func {
   # Initialize the callsign property if not done already.
   props.globals.initNode(accept_callsign, "", "STRING");
 
   manager = MPCarriers.Manager.new(rplayer,
-                                   "Clemenceau",
+                                   "Lodi",
                                    props.globals.getNode(accept_callsign));
 }
 
@@ -53,7 +53,7 @@ settimer(init, 15);
   </load>
   <unload>
 ##############################################################################
-   print("UNLOAD MP-Clemenceau ", cmdarg().getPath());
+   print("UNLOAD MP-Lodi ", cmdarg().getPath());
    if (manager != nil) manager.die();
 ##############################################################################
   </unload>

@@ -132,8 +132,8 @@ var send_events = func () {
 var incSpeed = func (i) {
   var speed = getprop(p_control_speed);
   speed = speed + i;
-  if (speed < 0) speed = 0;
-  if (speed > 30) speed = 30;
+  if (speed <-35) speed =-35;
+  if (speed > 35) speed = 35;
   setprop(p_control_speed, speed);
   carrier_base.getNode(c_control_speed).setValue(speed);
   gui.popupTip("Ordered " ~ speed ~ " kts ahead.")
