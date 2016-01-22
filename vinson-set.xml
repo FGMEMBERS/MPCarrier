@@ -81,6 +81,7 @@
 		<author>Anders Gidenstam, Vivian Meazza</author>
 		<status>alpha</status>
 		<aircraft-version>0.1</aircraft-version>
+    <variant-of>nimitz</variant-of>
 
 		<flight-model>null</flight-model>
 
